@@ -1,0 +1,85 @@
+---
+Parameters:
+  ADUserName:
+    Type: String
+    Default: ADUser
+    Description: Admin User Name
+  DevUserName:
+    Type: String
+    Default: DevUser
+    Description: Dev User Name
+  ReadUserName:
+    Type: String
+    Default: ReadUser
+    Description: Read User Name
+  PowerUserName:
+    Type: String
+    Default: PowerUser
+    Description: Power User Name
+
+  PasswordAd:
+    NoEcho: 'true'
+    Type: String
+    Description: New user password for Admin User
+    MinLength: '1'
+    MaxLength: '41'
+    ConstraintDescription: the password must be between 1 and 11 characters
+  PasswordDev:
+    NoEcho: 'true'
+    Type: String
+    Description: New user password for Dev user
+    MinLength: '1'
+    MaxLength: '41'
+    ConstraintDescription: the password must be between 1 and 11 characters
+  PasswordRead:
+    NoEcho: 'true'
+    Type: String
+    Description: New user password Read Only User
+    MinLength: '1'
+    MaxLength: '41'
+    ConstraintDescription: the password must be between 1 and 11 characters
+  PasswordPower:
+    NoEcho: 'true'
+    Type: String
+    Description: New user password for Power User
+    MinLength: '1'
+    MaxLength: '41'
+    ConstraintDescription: the password must be between 1 and 11 characters
+
+Resources:
+  AdminUser:
+    Type: AWS::IAM::User
+    Properties:
+      UserName: !Ref 'ADUserName'
+      LoginProfile:
+        Password: !Ref 'PasswordAd'
+      ManagedPolicyArns:
+        - arn:aws:iam::aws:policy/AdministratorAccess
+
+  DevUser:
+    Type: AWS::IAM::User
+    Properties:
+      UserName: !Ref 'DevUserName'
+      LoginProfile:
+        Password: !Ref 'PasswordDev'
+      ManagedPolicyArns:
+        - arn:aws:iam::aws:policy/AmazonEC2FullAccess
+
+  ReadonlyUser:
+    Type: AWS::IAM::User
+    Properties:
+      UserName: !Ref 'ReadUserName'
+      LoginProfile:
+        Password: !Ref 'PasswordRead'
+      ManagedPolicyArns:
+        - arn:aws:iam::aws:policy/AmazonS3ReadOnlyAccess
+
+  PowerUser:
+    Type: AWS::IAM::User
+    Properties:
+      UserName: !Ref 'PowerUserName'
+      LoginProfile:
+        Password: !Ref 'PasswordPower'
+      ManagedPolicyArns:
+        - arn:aws:iam::aws:policy/AWSOrganizationsFullAccess
+

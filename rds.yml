@@ -1,0 +1,49 @@
+Parameters:
+  DBInstanceIdentifier:
+    AllowedPattern: '[a-zA-Z][a-zA-Z0-9]*'
+    ConstraintDescription: Must begin with letter and contain ony alphabatic characters
+    Default: Mysqldb
+    Description: Instance identifier name
+    MinLength: '1'
+    MaxLength: '60'
+    Type: String
+  DatabaseUser:
+    AllowedPattern: '[a-zA-Z][a-zA-Z0-9]*'
+    ConstraintDescription: Must begin with letter and contain ony alphabatic characters
+    Default: dbadmin
+    Description: Username for mysqldb
+    MinLength: '1'
+    MaxLength: '16'
+    NoEcho: true
+    Type: String 
+  DatabasePassword:
+    AllowedPattern: '[a-zA-Z0-9]*'
+    ConstraintDescription: Must contain ony alphanumeric characters
+    Default: rootroot
+    Description: Password for mysqldb access
+    MinLength: '8'
+    MaxLength: '60'
+    NoEcho: true
+    Type: String    
+    
+  DBInstanceType:
+    Type: String
+    Default: t2.micro
+    Description: Enter t2.micro, m1.small, or m1.large. Default is t2.micro.
+    
+Resources:
+  RDSDBI4BOSF:
+    Type: 'AWS::RDS::DBInstance'
+    Properties:
+      DBInstanceType:
+        Ref: DBInstanceType
+      DBInstanceIdentifier:
+        Ref: DBInstanceIdentifier
+      DatabaseUser:
+        Ref: DatabaseUser
+      DatabasePassword:
+        Ref: DatabasePassword
+      
+             
+      
+

@@ -1,0 +1,71 @@
+---
+Parameters: 
+  ADGroupName: 
+    Type: String
+    Default: ADGroup
+    Description: Admin Group Name
+  DevGroupName: 
+    Type: String
+    Default: DevGroup
+    Description: Dev Group Name
+  ReadGroupName: 
+    Type: String
+    Default: ReadGroup
+    Description: Read Group Name
+  PowerGroupName: 
+    Type: String
+    Default: PowerGroup
+    Description: Power Group Name
+Resources:
+  AdminGroup:
+    Type: AWS::IAM::Group
+    Properties:
+      GroupName: !Ref ADGroupName
+      ManagedPolicyArns:
+        - arn:aws:iam::aws:policy/AdministratorAccess 
+         
+  DevGroup:
+    Type: AWS::IAM::Group
+    Properties:
+      GroupName: !Ref DevGroupName
+      ManagedPolicyArns:
+        - arn:aws:iam::aws:policy/AmazonEC2FullAccess 
+
+  ReadonlyGroup:
+    Type: AWS::IAM::Group
+    Properties:
+      GroupName: !Ref ReadGroupName
+      ManagedPolicyArns:
+        - arn:aws:iam::aws:policy/AmazonS3ReadOnlyAccess 
+
+  PowerGroup:
+    Type: AWS::IAM::Group
+    Properties:
+      GroupName: !Ref PowerGroupName
+      ManagedPolicyArns:
+        - arn:aws:iam::aws:policy/AWSOrganizationsFullAccess 
+
+Outputs:
+  ADGroup:
+    Value: !Ref ADGroupName
+    Description: GroupName
+    Export:
+      Name: !Sub ${AWS::StackName}-ADGroupName
+
+  DevGroup:
+    Value: !Ref DevGroup
+    Description: GroupName
+    Export:
+      Name: !Sub ${AWS::StackName}-DevGroup
+
+  ReadonlyGroup:
+    Value: !Ref DevGroup
+    Description: GroupName
+    Export:
+      Name: !Sub ${AWS::StackName}-ReadonlyGroup
+
+  PowerGroup:
+    Value: !Ref DevGroup
+    Description: GroupName
+    Export:
+      Name: !Sub ${AWS::StackName}-PowerGroup
